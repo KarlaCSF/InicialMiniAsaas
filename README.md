@@ -4,7 +4,7 @@ Projeto destinado à criação de um Mini Asaas, onde haverá uma página de cad
 
 ## Requisitos
 
-- JDK 8 ou superior
+- JDK 11
 - Grails 5
 
 ## Rodando
