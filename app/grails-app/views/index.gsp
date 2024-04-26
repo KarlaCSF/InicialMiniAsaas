@@ -4,6 +4,22 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cadastro</title>
+    <script>
+      const searchCep = async () => {
+        const cep = document.getElementById("cep").value;
+        const data = await fetch('https://viacep.com.br/ws/' + cep + '/json/');
+        const address = await data.json();
+        console.log(address);
+        fillAddress(address);
+      };
+
+      const fillAddress = (address) => {
+        document.getElementById("cidade").value = address.localidade;
+        document.getElementById("estado").value = address.uf;
+        document.getElementById("bairro").value = address.bairro;
+        document.getElementById("logradouro").value = address.logradouro;
+      };
+    </script>
 </head>
 <body>
     <form>
