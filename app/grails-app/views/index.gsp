@@ -35,7 +35,7 @@
       .container {
         display: flex;
         background-color: #0030b9;
-        max-width: 600px;
+        width: 500px;
         margin: 30px auto;
         padding: 40px;
         flex-direction: column;
@@ -44,12 +44,15 @@
       }
 
       .container h1 {
+        width: 100%;
+        text-align: center;
         margin: auto;
         padding-bottom: 15px;
-        font-size: 30px;
+        font-size: 32px;
       }
 
       .form-item {
+        width: 100%;
         padding: 10px;
       }
 
@@ -72,11 +75,22 @@
       }
 
       button {
-        margin: auto;
+        width: 100%;
+        background-color: #f1f5fb;
+        margin-top: 10px;
         padding: 15px;
         font-size: 20px;
         font-weight: bold;
         border-radius: 10px;
+      }
+      
+      @media (max-width: 500px) {
+        .container {
+          width: 100%;
+          height: 100%;
+          margin: 0;
+          border-radius: 0;
+        }
       }
     </style>
   </head>
