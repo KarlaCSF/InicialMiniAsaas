@@ -7,7 +7,7 @@
     <script>
       const searchCep = async () => {
         const cep = document.getElementById("cep").value;
-        const data = await fetch('https://viacep.com.br/ws/' + cep + '/json/');
+        const data = await fetch("https://viacep.com.br/ws/" + cep + "/json/");
         const address = await data.json();
         console.log(address);
         fillAddress(address);
@@ -36,8 +36,7 @@
         display: flex;
         background-color: #0030b9;
         max-width: 600px;
-        margin: auto;
-        margin-top: 30px;
+        margin: 30px auto;
         padding: 40px;
         flex-direction: column;
         border-radius: 15px;
@@ -71,62 +70,69 @@
         display: flex;
         flex-direction: row;
       }
+
+      button {
+        margin: auto;
+        padding: 15px;
+        font-size: 20px;
+        font-weight: bold;
+        border-radius: 10px;
+      }
     </style>
   </head>
 
   <body>
     <div class="container">
       <h1>Cadastro</h1>
-      <form>
+      <g:form action="showInfo" controller="cadastro">
         <div class="form-item">
           <label for="nome">Nome</label>
-          <input id="nome" />
+          <input name="nome" id="nome" />
         </div>
         <div class="form-item">
           <label for="cpf">CPF</label>
-          <input id="cpf" maxlength="11" />
-        </div>
-        <div class="form-item">
-          <label for="dataNasc">Data de Nascimento</label>
-          <input type="date" id="date" />
+          <input name="cpf" id="cpf" maxlength="11" />
         </div>
         <div class="form-item">
           <label for="telefone">Telefone</label>
-          <input type="tel" id="telefone" />
+          <input type="tel" id="telefone" name="telefone" />
         </div>
         <div class="form-item">
           <label for="email">Email</label>
-          <input type="email" id="email" />
+          <input type="email" id="email" name="email" />
         </div>
         <div class="form-item">
           <label for="cep">CEP</label>
-          <input maxlength="8" id="cep" onblur="searchCep()" />
+          <input maxlength="8" id="cep" name="cep" onblur="searchCep()" />
         </div>
         <div class="row-fields">
           <div class="form-item">
             <label for="cidade">Cidade</label>
-            <input id="cidade" />
+            <input id="cidade" name="cidade" />
           </div>
           <div class="form-item">
-            <label class="estado" for="estado">Estado</label>
-            <input class="estado" id="estado" />
+            <label for="estado">Estado</label>
+            <input id="estado" name="estado" />
           </div>
         </div>
         <div class="form-item">
           <label for="logradouro">Logradouro</label>
-          <input id="logradouro" />
+          <input id="logradouro" name="logradouro" />
         </div>
         <div class="row-fields">
           <div class="form-item">
             <label for="bairro">Bairro</label>
-            <input id="bairro" />
+            <input id="bairro" name="bairro" />
           </div>
           <div class="form-item">
             <label for="numero">Número</label>
-            <input type="number" id="numero" />
+            <input type="number" id="numero" name="numero" />
           </div>
         </div>
-      </form>
+        <div class="form-item">
+          <button type="submit">Enviar</button>
+        </div>
+      </g:form>
     </div>
   </body>
 </html>
