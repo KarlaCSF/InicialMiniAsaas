@@ -1,77 +1,152 @@
-<!doctype html>
-<html>
-<head>
-    <meta name="layout" content="main"/>
-    <title>Welcome to Grails</title>
-</head>
-<body>
-<content tag="nav">
-    <li class="dropdown">
-        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Application Status <span class="caret"></span></a>
-        <ul class="dropdown-menu">
-            <li class="dropdown-item"><a href="#">Environment: ${grails.util.Environment.current.name}</a></li>
-            <li class="dropdown-item"><a href="#">App profile: ${grailsApplication.config.grails?.profile}</a></li>
-            <li class="dropdown-item"><a href="#">App version:
-                <g:meta name="info.app.version"/></a>
-            </li>
-            <li role="separator" class="dropdown-divider"></li>
-            <li class="dropdown-item"><a href="#">Grails version:
-                <g:meta name="info.app.grailsVersion"/></a>
-            </li>
-            <li class="dropdown-item"><a href="#">Groovy version: ${GroovySystem.getVersion()}</a></li>
-            <li class="dropdown-item"><a href="#">JVM version: ${System.getProperty('java.version')}</a></li>
-            <li role="separator" class="dropdown-divider"></li>
-            <li class="dropdown-item"><a href="#">Reloading active: ${grails.util.Environment.reloadingAgentEnabled}</a></li>
-        </ul>
-    </li>
-    <li class="dropdown">
-        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Artefacts <span class="caret"></span></a>
-        <ul class="dropdown-menu">
-            <li class="dropdown-item"><a href="#">Controllers: ${grailsApplication.controllerClasses.size()}</a></li>
-            <li class="dropdown-item"><a href="#">Domains: ${grailsApplication.domainClasses.size()}</a></li>
-            <li class="dropdown-item"><a href="#">Services: ${grailsApplication.serviceClasses.size()}</a></li>
-            <li class="dropdown-item"><a href="#">Tag Libraries: ${grailsApplication.tagLibClasses.size()}</a></li>
-        </ul>
-    </li>
-    <li class="dropdown">
-        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Installed Plugins <span class="caret"></span></a>
-        <ul class="dropdown-menu">
-            <g:each var="plugin" in="${applicationContext.getBean('pluginManager').allPlugins}">
-                <li class="dropdown-item"><a href="#">${plugin.name} - ${plugin.version}</a></li>
-            </g:each>
-        </ul>
-    </li>
-</content>
+<!DOCTYPE html>
+<html lang="pt-br">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Cadastro</title>
+    <script>
+      const searchCep = async () => {
+        const cep = document.getElementById("cep").value;
+        const data = await fetch("https://viacep.com.br/ws/" + cep + "/json/");
+        const address = await data.json();
+        console.log(address);
+        fillAddress(address);
+      };
 
-<div class="svg" role="presentation">
-    <div class="grails-logo-container">
-        <asset:image src="grails-cupsonly-logo-white.svg" class="grails-logo"/>
-    </div>
-</div>
+      const fillAddress = (address) => {
+        document.getElementById("cidade").value = address.localidade;
+        document.getElementById("estado").value = address.uf;
+        document.getElementById("bairro").value = address.bairro;
+        document.getElementById("logradouro").value = address.logradouro;
+      };
+    </script>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
 
-<div id="content" role="main">
-    <section class="row colset-2-its">
-        <h1>Welcome to Grails</h1>
+      body {
+        background-color: #f1f5fb;
+        font-family: Verdana, Geneva, Tahoma, sans-serif;
+      }
 
-        <p>
-            Congratulations, you have successfully started your first Grails application! At the moment
-            this is the default page, feel free to modify it to either redirect to a controller or display
-            whatever content you may choose. Below is a list of controllers that are currently deployed in
-            this application, click on each to execute its default action:
-        </p>
+      .container {
+        display: flex;
+        background-color: #0030b9;
+        width: 500px;
+        margin: 30px auto;
+        padding: 40px;
+        flex-direction: column;
+        border-radius: 15px;
+        color: white;
+      }
 
-        <div id="controllers" role="navigation">
-            <h2>Available Controllers:</h2>
-            <ul>
-                <g:each var="c" in="${grailsApplication.controllerClasses.sort { it.fullName } }">
-                    <li class="controller">
-                        <g:link controller="${c.logicalPropertyName}">${c.fullName}</g:link>
-                    </li>
-                </g:each>
-            </ul>
+      .container h1 {
+        width: 100%;
+        text-align: center;
+        margin: auto;
+        padding-bottom: 15px;
+        font-size: 32px;
+      }
+
+      .form-item {
+        width: 100%;
+        padding: 10px;
+      }
+
+      label {
+        display: block;
+        padding-bottom: 5px;
+        font-size: 18px;
+      }
+
+      input {
+        padding: 8px;
+        border-radius: 5px;
+        width: 100%;
+        font-size: 18px;
+      }
+
+      .row-fields {
+        display: flex;
+        flex-direction: row;
+      }
+
+      button {
+        width: 100%;
+        background-color: #f1f5fb;
+        margin-top: 10px;
+        padding: 15px;
+        font-size: 20px;
+        font-weight: bold;
+        border-radius: 10px;
+      }
+      
+      @media (max-width: 500px) {
+        .container {
+          width: 100%;
+          height: 100%;
+          margin: 0;
+          border-radius: 0;
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="container">
+      <h1>Cadastro</h1>
+      <g:form action="showInfo" controller="cadastro">
+        <div class="form-item">
+          <label for="nome">Nome</label>
+          <input name="nome" id="nome" />
         </div>
-    </section>
-</div>
-
-</body>
+        <div class="form-item">
+          <label for="cpf">CPF</label>
+          <input name="cpf" id="cpf" maxlength="11" />
+        </div>
+        <div class="form-item">
+          <label for="telefone">Telefone</label>
+          <input type="tel" id="telefone" name="telefone" />
+        </div>
+        <div class="form-item">
+          <label for="email">Email</label>
+          <input type="email" id="email" name="email" />
+        </div>
+        <div class="form-item">
+          <label for="cep">CEP</label>
+          <input maxlength="8" id="cep" name="cep" onblur="searchCep()" />
+        </div>
+        <div class="row-fields">
+          <div class="form-item">
+            <label for="cidade">Cidade</label>
+            <input id="cidade" name="cidade" />
+          </div>
+          <div class="form-item">
+            <label for="estado">Estado</label>
+            <input id="estado" name="estado" />
+          </div>
+        </div>
+        <div class="form-item">
+          <label for="logradouro">Logradouro</label>
+          <input id="logradouro" name="logradouro" />
+        </div>
+        <div class="row-fields">
+          <div class="form-item">
+            <label for="bairro">Bairro</label>
+            <input id="bairro" name="bairro" />
+          </div>
+          <div class="form-item">
+            <label for="numero">Número</label>
+            <input type="number" id="numero" name="numero" />
+          </div>
+        </div>
+        <div class="form-item">
+          <button type="submit">Enviar</button>
+        </div>
+      </g:form>
+    </div>
+  </body>
 </html>
